@@ -35,53 +35,17 @@ export class AppComponent implements AfterViewInit {
 
   ////// Check if metamask once the dom isloaded
   ngAfterViewInit() {
-    if (typeof window.ethereum !== 'undefined') {
-      console.log('MetaMask is installed!');
 
-      this.connectMetamask();
-    }
   }
 
   ///// if metamask available connect
   async connectMetamask() {
-    this.provider = new ethers.providers.Web3Provider(window.ethereum);
 
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
-
-    this.signer = this.provider.getSigner();
-
-    this.signerAddress = await this.signer.getAddress();
-
-    console.log('metamask is connected')
-
-    this.changeNetwork();
   }
 
   ///// Change network if not
   async changeNetwork() {
-    try {
-      const { chainId } = await this.provider.getNetwork();
 
-      if (this.addressesObject[this.network].chainId !== chainId) {
-        await window.ethereum.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: this.addressesObject[this.network].chainIdHex }],
-        });
-        console.log('You have switched network');
-
-        this.initializeSuperfluid();
-      } else {
-        this.initializeSuperfluid();
-      }
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if (switchError.code === 4902) {
-        console.log(
-          'This network is not available in your metamask, please add it'
-        );
-      }
-      console.log('Failed to switch to the network');
-    }
   }
 
   //// Superfluid sdk-core initialized
