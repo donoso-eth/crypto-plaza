@@ -86,45 +86,12 @@ export class AppComponent implements AfterViewInit {
 
   //// Superfluid sdk-core initialized
   async initializeSuperfluid() {
-    this.sf = await Framework.create({
-      chainId: this.addressesObject[this.network].chainId,
-      provider: this.provider,
-    });
 
-    console.log('superfluid initialized');
   }
 
 
   //// Start Stream
   async startStream(token: string) {
-    let flowRate = utils
-      .parseEther('50')
-      .div(30 * 24 * 3600)
-      .toString();
-
-    try {
-     
-
-      let superToken = this.addressesObject[this.network][token];
-      console.log('sender: ', this.signerAddress);
-      console.log('flowRate: ', flowRate);
-      console.log('superToken: ',superToken)
-
-      let startFlowOperation = this.sf.cfaV1.createFlow({
-        overrides: { gasLimit: 1000000 },
-        sender: this.signerAddress,
-        receiver: this.receiverAddress,
-        flowRate,
-        superToken: superToken,
-      });
-
-      let tx = await startFlowOperation.exec(this.signer);
-      await tx.wait();
-
-      console.log(`${token}stream created successfully!`);
-    } catch (error) {
-      console.log(error);
-      console.log('oops something went wrong');
-    }
+   
   }
 }
