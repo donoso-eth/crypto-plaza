@@ -54,6 +54,10 @@ We can see the skeleton of our dapp with the main methods still empty.
 
 ```git ckecout step-2.1```
 
+#### And Voilà
+
+we have build and deploy our dApp to: [https://crypto-plaza.web.app](https://crypto-plaza.web.app)
+<h4 style="width:100%"><img align="center" height="200" src="src/assets/images/web.png"></h4>
 
 
 

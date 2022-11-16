@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/crypto-plaza",
+    "public": "dist/v1",
     "ignore": [
       "firebase.json",
       "**/.*",
