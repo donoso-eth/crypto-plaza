@@ -46,6 +46,8 @@ export class AppComponent implements AfterViewInit {
   async connectMetamask() {
     this.provider = new ethers.providers.Web3Provider(window.ethereum);
 
+    await window.ethereum.request({ method: 'eth_requestAccounts' });
+
     this.signer = this.provider.getSigner();
 
     this.signerAddress = await this.signer.getAddress();
