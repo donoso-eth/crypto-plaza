@@ -1,4 +1,4 @@
-# Crypto Plaza Workshop 16/11/20
+# Crypto Plaza Workshop 17/11/20
 
 This project is created for the Workshop within the frame of the Crypto Plaza Forum
 <h4 style="width:100%"><img align="center" height="200" src="src/assets/images/crypto_plaza.png"></h4>
@@ -48,6 +48,6 @@ We have so far only the intro screen from angular. Let's go to the next step to 
 
 ```git ckecout step-2```
 
-We can see
+We can see the skeleton of our dapp with the main methods still empty.
 
 
