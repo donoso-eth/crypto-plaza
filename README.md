@@ -50,4 +50,11 @@ We have so far only the intro screen from angular. Let's go to the next step to 
 
 We can see the skeleton of our dapp with the main methods still empty.
 
+#### Step 2.1
+
+```git ckecout step-2.1```
+
+
+
+
 
