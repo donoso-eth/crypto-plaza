@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/crypto-plaza",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
