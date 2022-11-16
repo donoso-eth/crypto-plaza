@@ -27,6 +27,8 @@ Please go to following repo:
 
 ``` npm i```
 
+```git checkout set-up```
+
 ---
 
 ### Step 1
