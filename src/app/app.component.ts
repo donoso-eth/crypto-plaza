@@ -8,7 +8,7 @@ import { ethers, utils } from 'ethers';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterViewInit {
-  receiverAddress = '0xe09E488A6E1B8237b63e028218CCf72a2a398CB1';
+  receiverAddress = '0xd76ab75795c001d0ad98d7f51f4460ea0b933834';
 
   signer: ethers.providers.JsonRpcSigner;
   provider: ethers.providers.Web3Provider;
