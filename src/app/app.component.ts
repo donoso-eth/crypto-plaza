@@ -17,7 +17,13 @@ export class AppComponent implements AfterViewInit {
 
   network: 'mumbai' | 'polygon' = 'mumbai';
 
-  //// Required addressess SuperTokens and 
+  //// state
+  loading: boolean = true;
+  metamask: boolean = false;
+  connected: boolean = false;
+  stream_state: 'none' | 'starting' | 'success' | 'error' = 'none';
+
+  //// Required addressess SuperTokens and
   addressesObject = {
     mumbai: {
       usdc: '0x42bb40bF79730451B11f6De1CbA222F17b87Afd7',
@@ -37,24 +43,30 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit() {
     if (typeof window.ethereum !== 'undefined') {
       console.log('MetaMask is installed!');
-
-      this.connectMetamask();
+      this.metamask = true;
+      this.loading = false;
     }
   }
 
   ///// if metamask available connect
   async connectMetamask() {
-    this.provider = new ethers.providers.Web3Provider(window.ethereum);
+    try {
+      this.connected = true;
 
-    await window.ethereum.request({ method: 'eth_requestAccounts' });
+      this.provider = new ethers.providers.Web3Provider(window.ethereum);
 
-    this.signer = this.provider.getSigner();
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
 
-    this.signerAddress = await this.signer.getAddress();
+      this.signer = this.provider.getSigner();
 
-    console.log('metamask is connected')
+      this.signerAddress = await this.signer.getAddress();
 
-    this.changeNetwork();
+      console.log('metamask is connected');
+
+      this.changeNetwork();
+    } catch (error) {
+      this.connected = false;
+    }
   }
 
   ///// Change network if not
@@ -94,21 +106,21 @@ export class AppComponent implements AfterViewInit {
     console.log('superfluid initialized');
   }
 
-
   //// Start Stream
   async startStream(token: string) {
+    this.stream_state = 'starting';
     let flowRate = utils
       .parseEther('50')
       .div(30 * 24 * 3600)
       .toString();
 
     try {
-     
+      this.loading = true;
 
       let superToken = this.addressesObject[this.network][token];
       console.log('sender: ', this.signerAddress);
       console.log('flowRate: ', flowRate);
-      console.log('superToken: ',superToken)
+      console.log('superToken: ', superToken);
 
       let startFlowOperation = this.sf.cfaV1.createFlow({
         overrides: { gasLimit: 1000000 },
@@ -121,8 +133,12 @@ export class AppComponent implements AfterViewInit {
       let tx = await startFlowOperation.exec(this.signer);
       await tx.wait();
 
+      this.stream_state = 'success';
+      this.loading = false;
       console.log(`${token}stream created successfully!`);
     } catch (error) {
+      this.stream_state = 'error';
+      this.loading = false;
       console.log(error);
       console.log('oops something went wrong');
     }
